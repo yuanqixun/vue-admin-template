@@ -2,9 +2,10 @@
   <div :class="classObj" class="app-wrapper">
     <div v-if="device==='mobile'&&sidebar.opened" class="drawer-bg" @click="handleClickOutside" />
     <sidebar class="sidebar-container" />
-    <div class="main-container">
+    <div :class="{hasTagsView:needTagsView}" class="main-container">
       <div :class="{'fixed-header':fixedHeader}">
         <navbar />
+        <tags-view v-if="needTagsView" />
       </div>
       <app-main />
       <right-panel v-if="showSettings">
@@ -16,7 +17,7 @@
 
 <script>
 import RightPanel from '@/components/RightPanel'
-import { Navbar, Sidebar, AppMain, Settings } from './components'
+import { Navbar, Sidebar, AppMain, Settings, TagsView } from './components'
 import ResizeMixin from './mixin/ResizeHandler'
 
 export default {
@@ -26,7 +27,8 @@ export default {
     Sidebar,
     AppMain,
     RightPanel,
-    Settings
+    Settings,
+    TagsView
   },
   mixins: [ResizeMixin],
   computed: {
@@ -42,6 +44,10 @@ export default {
     showSettings() {
       return this.$store.state.settings.showSettings
     },
+    needTagsView() {
+      return this.$store.state.settings.tagsView
+    },
+
     classObj() {
       return {
         hideSidebar: !this.sidebar.opened,

@@ -17,5 +17,10 @@ module.exports = {
   /**
    * 是否显示设置的浮动栏
    */
-  showSettings: true
+  showSettings: true,
+
+  /**
+   * 多页签显示
+   */
+  tagsView: true
 }
