@@ -1,6 +1,6 @@
 <template>
   <div class="app-container">
-    <h1>基本表单</h1>
+    <h1>高级表单</h1>
     <el-form ref="form" :model="form" label-width="120px">
       <el-form-item label="Activity name">
         <el-input v-model="form.name" />
