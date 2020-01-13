@@ -1,29 +1,15 @@
 <template>
   <div class="app-container">
-    <vxe-table
+    <vxe-grid
       border
-      show-overflow
-      height="400"
-      row-id="id"
+      resizable
+      height="500"
       size="small"
       :loading="loading"
+      :seq-config="{startIndex: (tablePage.currentPage - 1) * tablePage.pageSize}"
+      :pager-config="tablePage"
+      :columns="tableColumn"
       :data="tableData"
-    >
-      <vxe-table-column type="checkbox" width="60" />
-      <vxe-table-column type="seq" title="序号" width="60" />
-      <vxe-table-column field="name" title="Name" sortable />
-      <vxe-table-column field="sex" title="Sex" />
-      <vxe-table-column field="age" title="Age" />
-      <vxe-table-column field="rate" title="Rate" />
-    </vxe-table>
-    <vxe-pager
-      background
-      size="small"
-      :loading="loading"
-      :current-page="tablePage.currentPage"
-      :page-size="tablePage.pageSize"
-      :total="tablePage.totalResult"
-      :layouts="['PrevPage', 'JumpNumber', 'NextPage', 'FullJump', 'Sizes', 'Total']"
       @page-change="handlePageChange"
     />
   </div>
@@ -41,12 +27,24 @@ export default {
   data() {
     return {
       loading: false,
-      tableData: [],
       tablePage: {
+        total: 0,
         currentPage: 1,
         pageSize: 10,
-        totalResult: 0
-      }
+        align: 'left',
+        pageSizes: [10, 20, 50, 100, 200, 500],
+        layouts: ['Sizes', 'PrevJump', 'PrevPage', 'Number', 'NextPage', 'NextJump', 'FullJump', 'Total'],
+        perfect: true
+      },
+      tableColumn: [
+        { type: 'seq', width: 60 },
+        { type: 'checkbox', width: 50 },
+        { field: 'name', title: 'Name' },
+        { field: 'sex', title: 'sex' },
+        { field: 'age', title: 'age' },
+        { field: 'rate', title: 'rate', showOverflow: true }
+      ],
+      tableData: []
     }
   },
   created() {
@@ -60,7 +58,7 @@ export default {
       getList({ currentPage, pageSize }).then(({ code, data }) => {
         if (code === 20000) {
           this.tableData = data.items
-          this.tablePage.totalResult = data.totalResult
+          this.tablePage.total = data.totalResult
         }
         this.loading = false
       }).catch(e => {

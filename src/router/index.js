@@ -102,11 +102,20 @@ export const asyncRoutes = [
     },
     children: [
       {
-        path: 'index',
+        path: 'vtable',
         name: 'baseTable',
-        component: () => import('@/views/table/index'),
+        component: () => import('@/views/table/vtable'),
         meta: {
           title: '简单表格',
+          icon: 'table',
+          roles: ['employe']
+        }
+      }, {
+        path: 'vgrid',
+        name: 'vgrid',
+        component: () => import('@/views/table/vgrid'),
+        meta: {
+          title: '高级表格',
           icon: 'table',
           roles: ['employe']
         }
