@@ -1,78 +1,76 @@
 <template>
   <div class="app-container">
-    <el-table
-      v-loading="listLoading"
-      :data="list"
-      element-loading-text="Loading"
+    <vxe-table
       border
-      fit
-      highlight-current-row
+      show-overflow
+      height="400"
+      row-id="id"
+      size="small"
+      :loading="loading"
+      :data="tableData"
     >
-      <el-table-column align="center" label="ID" width="95">
-        <template slot-scope="scope">
-          {{ scope.$index }}
-        </template>
-      </el-table-column>
-      <el-table-column label="Title">
-        <template slot-scope="scope">
-          {{ scope.row.title }}
-        </template>
-      </el-table-column>
-      <el-table-column label="Author" width="110" align="center">
-        <template slot-scope="scope">
-          <span>{{ scope.row.author }}</span>
-        </template>
-      </el-table-column>
-      <el-table-column label="Pageviews" width="110" align="center">
-        <template slot-scope="scope">
-          {{ scope.row.pageviews }}
-        </template>
-      </el-table-column>
-      <el-table-column class-name="status-col" label="Status" width="110" align="center">
-        <template slot-scope="scope">
-          <el-tag :type="scope.row.status | statusFilter">{{ scope.row.status }}</el-tag>
-        </template>
-      </el-table-column>
-      <el-table-column align="center" prop="created_at" label="Display_time" width="200">
-        <template slot-scope="scope">
-          <i class="el-icon-time" />
-          <span>{{ scope.row.display_time }}</span>
-        </template>
-      </el-table-column>
-    </el-table>
+      <vxe-table-column type="checkbox" width="60" />
+      <vxe-table-column type="seq" title="序号" width="60" />
+      <vxe-table-column field="name" title="Name" sortable />
+      <vxe-table-column field="sex" title="Sex" />
+      <vxe-table-column field="age" title="Age" />
+      <vxe-table-column field="rate" title="Rate" />
+    </vxe-table>
+    <vxe-pager
+      background
+      size="small"
+      :loading="loading"
+      :current-page="tablePage.currentPage"
+      :page-size="tablePage.pageSize"
+      :total="tablePage.totalResult"
+      :layouts="['PrevPage', 'JumpNumber', 'NextPage', 'FullJump', 'Sizes', 'Total']"
+      @page-change="handlePageChange"
+    />
   </div>
 </template>
-
 <script>
+import Vue from 'vue'
+import 'xe-utils'
+import VXETable from 'vxe-table'
+import 'vxe-table/lib/index.css'
 import { getList } from '@/api/table'
+Vue.use(VXETable)
 
 export default {
-  filters: {
-    statusFilter(status) {
-      const statusMap = {
-        published: 'success',
-        draft: 'gray',
-        deleted: 'danger'
-      }
-      return statusMap[status]
-    }
-  },
+  components: {},
   data() {
     return {
-      list: null,
-      listLoading: true
+      loading: false,
+      tableData: [],
+      tablePage: {
+        currentPage: 1,
+        pageSize: 10,
+        totalResult: 0
+      }
     }
   },
   created() {
-    this.fetchData()
+    this.findList()
   },
   methods: {
-    fetchData() {
-      this.listLoading = true
-      getList().then(response => {
-        this.list = response.data.items
-        this.listLoading = false
+    findList() {
+      this.loading = true
+      const currentPage = this.tablePage.currentPage
+      const pageSize = this.tablePage.pageSize
+      getList({ currentPage, pageSize }).then(({ code, data }) => {
+        if (code === 20000) {
+          this.tableData = data.items
+          this.tablePage.totalResult = data.totalResult
+        }
+        this.loading = false
+      }).catch(e => {
+        this.loading = false
       })
+    },
+    handlePageChange({ currentPage, pageSize }) {
+      this.tablePage.currentPage = currentPage
+      this.tablePage.pageSize = pageSize
+      this.findList()
     }
   }
 }

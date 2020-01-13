@@ -89,6 +89,30 @@ export const asyncRoutes = [
       }
     ]
   },
+  {
+    path: '/table',
+    component: Layout,
+    redirect: 'noRedirect',
+    alwaysShow: true,
+    meta: {
+      title: '表格',
+      icon: 'table',
+      roles: ['employe'],
+      breadcrumb: false
+    },
+    children: [
+      {
+        path: 'index',
+        name: 'baseTable',
+        component: () => import('@/views/table/index'),
+        meta: {
+          title: '简单表格',
+          icon: 'table',
+          roles: ['employe']
+        }
+      }
+    ]
+  },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
