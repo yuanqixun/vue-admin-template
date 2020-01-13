@@ -50,7 +50,7 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+      meta: { title: '首页', icon: 'dashboard', affix: true }
     }]
   }
 ]
@@ -59,10 +59,13 @@ export const asyncRoutes = [
   {
     path: '/form',
     component: Layout,
+    redirect: 'noRedirect',
+    alwaysShow: true,
     meta: {
       title: '表单',
       icon: 'form',
-      roles: 'employe'
+      roles: ['employe'],
+      breadcrumb: false
     },
     children: [
       {
