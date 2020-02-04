@@ -25,7 +25,7 @@ export default {
   watch: {
     cachedViews: function() {
       // 这个方法废弃，不需要销毁
-      // console.log(this.$store.state.tagsView.cachedViews)
+      console.log(this.$store.state.tagsView.cachedViews)
       for (const c of this.$children) {
         console.log(c)
         const _vname = c.$vnode.data.attrs.vname
