@@ -23,6 +23,7 @@ import { getList } from '@/api/table'
 Vue.use(VXETable)
 
 export default {
+  name: 'AdvanceTable',
   components: {},
   data() {
     return {

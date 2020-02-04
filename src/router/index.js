@@ -70,7 +70,7 @@ export const asyncRoutes = [
     children: [
       {
         path: 'index',
-        name: 'baseForm',
+        name: 'BaseForm',
         component: () => import('@/views/form/index'),
         meta: {
           title: '基本表单',
@@ -84,7 +84,7 @@ export const asyncRoutes = [
         meta: {
           title: '复杂表单',
           icon: 'form',
-          roles: ['admin']
+          roles: ['employe']
         }
       }
     ]
@@ -103,7 +103,7 @@ export const asyncRoutes = [
     children: [
       {
         path: 'vtable',
-        name: 'baseTable',
+        name: 'BaseTable',
         component: () => import('@/views/table/vtable'),
         meta: {
           title: '简单表格',
@@ -112,7 +112,7 @@ export const asyncRoutes = [
         }
       }, {
         path: 'vgrid',
-        name: 'vgrid',
+        name: 'AdvanceTable',
         component: () => import('@/views/table/vgrid'),
         meta: {
           title: '高级表格',

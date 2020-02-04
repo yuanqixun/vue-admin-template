@@ -38,6 +38,7 @@ import { getList } from '@/api/table'
 Vue.use(VXETable)
 
 export default {
+  name: 'BaseTable',
   components: {},
   data() {
     return {

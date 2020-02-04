@@ -24,6 +24,7 @@ export default {
   },
   watch: {
     cachedViews: function() {
+      // 这个方法废弃，不需要销毁
       // console.log(this.$store.state.tagsView.cachedViews)
       for (const c of this.$children) {
         console.log(c)
