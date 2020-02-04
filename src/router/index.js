@@ -122,6 +122,24 @@ export const asyncRoutes = [
       }
     ]
   },
+  {
+    path: '/profile',
+    component: Layout,
+    redirect: 'noRedirect',
+    children: [
+      {
+        path: 'index',
+        name: 'Profile',
+        component: () => import('@/views/profile/index'),
+        meta: {
+          title: '个人设置',
+          icon: 'form',
+          roles: ['employe']
+        },
+        hidden: true
+      }
+    ]
+  },
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }
 ]
