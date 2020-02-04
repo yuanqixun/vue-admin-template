@@ -345,3 +345,15 @@ export function removeClass(ele, cls) {
     ele.className = ele.className.replace(reg, ' ')
   }
 }
+
+/**
+ * 页面内关闭当前页面
+ */
+export function closePage() {
+  this.$store.dispatch('tagsView/delVisitedView', this.$route).then(() => {
+    const latestView = this.$store.getters.visitedViews.slice(-1)[0]
+    if (latestView) {
+      this.$router.push(latestView.fullPath)
+    }
+  })
+}

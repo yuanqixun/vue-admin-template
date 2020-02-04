@@ -52,75 +52,6 @@ export const constantRoutes = [
       component: () => import('@/views/dashboard/index'),
       meta: { title: '首页', icon: 'dashboard', affix: true }
     }]
-  }
-]
-
-export const asyncRoutes = [
-  {
-    path: '/form',
-    component: Layout,
-    redirect: 'noRedirect',
-    alwaysShow: true,
-    meta: {
-      title: '表单',
-      icon: 'form',
-      roles: ['employe'],
-      breadcrumb: false
-    },
-    children: [
-      {
-        path: 'index',
-        name: 'BaseForm',
-        component: () => import('@/views/form/index'),
-        meta: {
-          title: '基本表单',
-          icon: 'form',
-          roles: ['employe']
-        }
-      }, {
-        path: 'advance',
-        name: 'AdvanceForm',
-        component: () => import('@/views/form/advance'),
-        meta: {
-          title: '复杂表单',
-          icon: 'form',
-          roles: ['employe']
-        }
-      }
-    ]
-  },
-  {
-    path: '/table',
-    component: Layout,
-    redirect: 'noRedirect',
-    alwaysShow: true,
-    meta: {
-      title: '表格',
-      icon: 'table',
-      roles: ['employe'],
-      breadcrumb: false
-    },
-    children: [
-      {
-        path: 'vtable',
-        name: 'BaseTable',
-        component: () => import('@/views/table/vtable'),
-        meta: {
-          title: '简单表格',
-          icon: 'table',
-          roles: ['employe']
-        }
-      }, {
-        path: 'vgrid',
-        name: 'AdvanceTable',
-        component: () => import('@/views/table/vgrid'),
-        meta: {
-          title: '高级表格',
-          icon: 'table',
-          roles: ['employe']
-        }
-      }
-    ]
   },
   {
     path: '/profile',
@@ -132,16 +63,12 @@ export const asyncRoutes = [
         name: 'Profile',
         component: () => import('@/views/profile/index'),
         meta: {
-          title: '个人设置',
-          icon: 'form',
-          roles: ['employe']
+          title: '个人设置'
         },
         hidden: true
       }
     ]
-  },
-  // 404 page must be placed at the end !!!
-  { path: '*', redirect: '/404', hidden: true }
+  }
 ]
 
 const createRouter = () => new Router({
@@ -156,6 +83,15 @@ const router = createRouter()
 export function resetRouter() {
   const newRouter = createRouter()
   router.matcher = newRouter.matcher // reset router
+}
+
+// 所有的页面，用以匹配动态路由
+export const allViews = {
+  BaseForm: () => import('@/views/demo/baseForm'),
+  AdvanceForm: () => import('@/views/demo/advanceForm'),
+  Vgrid: () => import('@/views/demo/vgrid'),
+  Vtable: () => import('@/views/demo/vtable'),
+  404: () => import('@/views/404')
 }
 
 // 实例化vue的时候只挂载constantRouter

@@ -1,5 +1,6 @@
 <template>
   <div class="app-container">
+    <el-button type="primary" size="small" @click="closePage">关闭</el-button>
     <vxe-grid
       border
       resizable
@@ -20,6 +21,7 @@ import 'xe-utils'
 import VXETable from 'vxe-table'
 import 'vxe-table/lib/index.css'
 import { getList } from '@/api/table'
+import { closePage } from '@/utils/index.js'
 Vue.use(VXETable)
 
 export default {
@@ -52,6 +54,7 @@ export default {
     this.findList()
   },
   methods: {
+    closePage: closePage,
     findList() {
       this.loading = true
       const currentPage = this.tablePage.currentPage

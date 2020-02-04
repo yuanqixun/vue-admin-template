@@ -1,13 +1,6 @@
-import { constantRoutes } from '@/router'
+import { constantRoutes, allViews } from '@/router'
 import { getMyMenuList } from '@/api/auth'
 import Layout from '@/layout'
-
-const allmap = {
-  BaseForm: () => import('@/views/demo/baseForm'),
-  AdvanceForm: () => import('@/views/demo/advanceForm'),
-  Vgrid: () => import('@/views/demo/vgrid'),
-  Vtable: () => import('@/views/demo/vtable')
-}
 /**
  * Use meta.role to determine if the current user has permission
  * @param roles
@@ -32,7 +25,10 @@ function convertRoutes(routers, menuList) {
       if (m.pid && m.pid === r.meta.id) {
         if (!r.children) r.children = []
         m.fullPath = r.meta.fullPath + '/' + m.path
-        const comp = allmap[m.name]
+        let comp = allViews[m.name]
+        if (!comp) {
+          comp = allViews[404]
+        }
         const menu = {
           path: m.path,
           name: m.name,
@@ -108,6 +104,9 @@ const actions = {
       })
       // 递归调用
       convertRoutes(menuRouters, menuList)
+      // 压入404页面
+      const notfound = { path: '*', redirect: '/404', hidden: true }
+      menuRouters.push(notfound)
       commit('SET_ROUTES', menuRouters)
       resolve(menuRouters)
     })
