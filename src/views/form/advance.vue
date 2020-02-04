@@ -93,6 +93,7 @@
 
 <script>
 export default {
+  name: 'AdvanceForm',
   data() {
     return {
       form: {

@@ -79,7 +79,7 @@ export const asyncRoutes = [
         }
       }, {
         path: 'advance',
-        name: 'advanceForm',
+        name: 'AdvanceForm',
         component: () => import('@/views/form/advance'),
         meta: {
           title: '复杂表单',
