@@ -50,7 +50,7 @@ export const constantRoutes = [
       path: 'dashboard',
       name: 'Dashboard',
       component: () => import('@/views/dashboard/index'),
-      meta: { title: '首页', icon: 'dashboard', affix: true }
+      meta: { title: '首页', icon: 'el-icon-odometer', affix: true }
     }]
   },
   {
@@ -91,6 +91,7 @@ export const allViews = {
   AdvanceForm: () => import('@/views/demo/advanceForm'),
   Vgrid: () => import('@/views/demo/vgrid'),
   Vtable: () => import('@/views/demo/vtable'),
+  MenuList: () => import('@/views/system/MenuList'),
   404: () => import('@/views/404')
 }
 

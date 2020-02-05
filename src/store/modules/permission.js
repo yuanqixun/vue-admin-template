@@ -33,7 +33,7 @@ function convertRoutes(routers, menuList) {
           path: m.path,
           name: m.name,
           component: comp,
-          meta: { id: m.id, title: m.title, fullPath: r.meta.fullPath + '/' + m.path }
+          meta: { id: m.id, icon: 'el-icon-document', title: m.title, fullPath: r.meta.fullPath + '/' + m.path }
         }
         r.children.push(menu)
       }
@@ -96,7 +96,7 @@ const actions = {
             component: Layout,
             redirect: 'noRedirect',
             alwaysShow: true,
-            meta: { id: m.id, title: m.title, fullPath: '/' + m.path, breadcrumb: false },
+            meta: { id: m.id, icon: 'el-icon-folder', title: m.title, fullPath: '/' + m.path, breadcrumb: false },
             children: []
           }
           menuRouters.push(module)
