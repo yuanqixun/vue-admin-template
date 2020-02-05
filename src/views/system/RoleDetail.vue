@@ -70,16 +70,9 @@
   </div>
 </template>
 <script>
-import Vue from 'vue'
-import XEUtils from 'xe-utils'
-import VXETable from 'vxe-table'
-import 'vxe-table/lib/index.css'
 import { getAdminRoleAuthDetail } from '@/api/role'
-import { closePage } from '../../utils'
-
-Vue.use(VXETable)
 export default {
-  name: 'MenuList',
+  name: 'RoleDetail',
   data() {
     return {
       searchName: '',
@@ -90,7 +83,9 @@ export default {
     this.findList()
   },
   methods: {
-    closePage: closePage,
+    closePage() {
+      this.$closePage()
+    },
     resetFilter() {
       this.searchName = ''
       this.findList()
@@ -99,7 +94,7 @@ export default {
       if (this.searchName) {
         const options = { children: 'children' }
         const searchProps = ['name']
-        this.tableData = XEUtils.searchTree(this.tableData, item => searchProps.some(key => XEUtils.toString(item[key]).indexOf(this.searchName) > -1), options)
+        this.tableData = this.$XEUtils.searchTree(this.tableData, item => searchProps.some(key => this.$XEUtils.toString(item[key]).indexOf(this.searchName) > -1), options)
         // 搜索之后默认展开所有子节点
         this.$nextTick(() => {
           this.$refs.xTree.setAllTreeExpansion(true)

@@ -43,12 +43,7 @@
   </div>
 </template>
 <script>
-import Vue from 'vue'
-import 'xe-utils'
-import VXETable from 'vxe-table'
-import 'vxe-table/lib/index.css'
 import { getAdminMenuList } from '@/api/menu'
-Vue.use(VXETable)
 export default {
   name: 'MenuList',
   data() {

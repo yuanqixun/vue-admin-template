@@ -21,7 +21,6 @@
 </template>
 
 <script>
-import { closePage } from '@/utils/index.js'
 export default {
   name: 'Page404',
   computed: {
@@ -30,7 +29,9 @@ export default {
     }
   },
   methods: {
-    closePage: closePage
+    closePage() {
+      this.$closePage()
+    }
   }
 }
 </script>

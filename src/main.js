@@ -7,6 +7,10 @@ import 'element-ui/lib/theme-chalk/index.css'
 // import locale from 'element-ui/lib/locale/lang/zh-CN' // lang i18n
 
 import '@/styles/index.scss' // global css
+// vxetable
+import XEUtils from 'xe-utils'
+import VXETable from 'vxe-table'
+import 'vxe-table/lib/index.css'
 
 import App from './App'
 import store from './store'
@@ -33,6 +37,20 @@ if (process.env.NODE_ENV === 'production') {
 Vue.use(ElementUI, { size: 'small', zIndex: 3000 })
 // 如果想要中文版 element-ui，按如下方式声明
 // Vue.use(ElementUI)
+
+Vue.use(VXETable)
+Vue.prototype.$XEUtils = XEUtils
+/**
+ * 关闭页签
+ */
+Vue.prototype.$closePage = function() {
+  this.$store.dispatch('tagsView/delVisitedView', this.$route).then(() => {
+    const latestView = this.$store.getters.visitedViews.slice(-1)[0]
+    if (latestView) {
+      this.$router.push(latestView.fullPath)
+    }
+  })
+}
 
 Vue.config.productionTip = false
 

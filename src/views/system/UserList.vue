@@ -54,7 +54,7 @@
 <script>
 import { getAdminRoleList } from '@/api/role'
 export default {
-  name: 'RoleList',
+  name: 'UserList',
   components: {},
   data() {
     return {
