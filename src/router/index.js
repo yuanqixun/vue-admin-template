@@ -95,6 +95,7 @@ export const allViews = {
   RoleList: () => import('@/views/system/RoleList'),
   RoleDetail: () => import('@/views/system/RoleDetail'),
   UserList: () => import('@/views/system/UserList'),
+  UserDetail: () => import('@/views/system/UserDetail'),
   404: () => import('@/views/404')
 }
 
