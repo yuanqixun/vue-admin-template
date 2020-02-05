@@ -93,6 +93,7 @@ export const allViews = {
   Vtable: () => import('@/views/demo/vtable'),
   MenuList: () => import('@/views/system/MenuList'),
   RoleList: () => import('@/views/system/RoleList'),
+  RoleDetail: () => import('@/views/system/RoleDetail'),
   404: () => import('@/views/404')
 }
 

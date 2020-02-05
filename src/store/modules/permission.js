@@ -25,6 +25,8 @@ function convertRoutes(routers, menuList) {
       if (m.pid && m.pid === r.meta.id) {
         if (!r.children) r.children = []
         m.fullPath = r.meta.fullPath + '/' + m.path
+        // 某些菜单关联明细页面，需要增加到路由表中
+        const _hidden = m.hidden ? m.hidden : false
         let comp = allViews[m.name]
         if (!comp) {
           comp = allViews[404]
@@ -33,6 +35,7 @@ function convertRoutes(routers, menuList) {
           path: m.path,
           name: m.name,
           component: comp,
+          hidden: _hidden,
           meta: { id: m.id, icon: 'el-icon-document', title: m.title, fullPath: r.meta.fullPath + '/' + m.path }
         }
         r.children.push(menu)

@@ -3,7 +3,7 @@
     <el-row class="text-left el-collapse-item active">
       <el-form :inline="true">
         <el-form-item label="角色名称:">
-          <el-input placeholder="角色名称" />
+          <el-input v-model="searchForm.name" placeholder="角色名称" />
         </el-form-item>
         <el-form-item label="">
           <el-button type="primary" size="small">查询</el-button>
@@ -32,7 +32,9 @@
       <vxe-table-column field="createdDate" title="创建日期" width="150" />
       <vxe-table-column title="操作" align="center" width="200">
         <template v-slot="{ row }">
-          <el-button type="primary" size="mini" icon="el-icon-edit">编辑</el-button>
+          <router-link :to="{path:'/system/RoleDetail',query:{id:row.id}}">
+            <el-button type="primary" size="mini" icon="el-icon-edit">编辑</el-button>
+          </router-link>
           <el-button type="danger" size="mini" icon="el-icon-delete">删除</el-button>
         </template>
       </vxe-table-column>
@@ -62,6 +64,9 @@ export default {
   components: {},
   data() {
     return {
+      searchForm: {
+        name: ''
+      },
       loading: false,
       tableData: [],
       tablePage: {

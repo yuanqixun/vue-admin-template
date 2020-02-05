@@ -42,17 +42,6 @@
     </vxe-table>
   </div>
 </template>
-<style>
-  .tree-node-icon {
-    width: 24px;
-    text-align: center;
-  }
-
-  .vxe-tree--line {
-    bottom: -.9em !important;
-    width: 1em !important;
-  }
-</style>
 <script>
 import Vue from 'vue'
 import 'xe-utils'
