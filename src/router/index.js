@@ -92,6 +92,7 @@ export const allViews = {
   Vgrid: () => import('@/views/demo/vgrid'),
   Vtable: () => import('@/views/demo/vtable'),
   MenuList: () => import('@/views/system/MenuList'),
+  RoleList: () => import('@/views/system/RoleList'),
   404: () => import('@/views/404')
 }
 
