@@ -2,8 +2,11 @@
   <div class="app-container">
     <el-row class="text-left el-collapse-item active">
       <el-form :inline="true">
-        <el-form-item label="角色名称:">
-          <el-input v-model="searchForm.name" placeholder="角色名称" />
+        <el-form-item label="用户名称:">
+          <el-input v-model="searchForm.name" placeholder="用户名称" />
+        </el-form-item>
+        <el-form-item label="登陆账号:">
+          <el-input v-model="searchForm.loginId" placeholder="登陆账号" />
         </el-form-item>
         <el-form-item label="">
           <el-button type="primary" size="small">查询</el-button>
@@ -27,10 +30,14 @@
       :seq-config="{startIndex: (tablePage.currentPage - 1) * tablePage.pageSize}"
     >
       <vxe-table-column type="seq" title="序号" align="center" width="60" />
-      <vxe-table-column field="name" title="角色名称" width="300" />
-      <vxe-table-column field="description" title="角色描述" />
-      <vxe-table-column field="createdDate" title="创建日期" width="150" />
-      <vxe-table-column title="操作" align="center" width="200">
+      <vxe-table-column field="username" title="登陆名称" width="150" />
+      <vxe-table-column field="name" title="人员名称" width="150" />
+      <vxe-table-column title="是否锁定" width="80" align="center">
+        <template v-slot="{ row }">
+          <el-switch v-model="row.isEnabled" active-color="#13ce66" @change="onSwitchLock($event,row.id)" />
+        </template>
+      </vxe-table-column>
+      <vxe-table-column title="操作" align="left">
         <template v-slot="{ row }">
           <router-link :to="{path:'/system/RoleDetail',query:{id:row.id}}">
             <el-button type="primary" size="mini" icon="el-icon-edit">编辑</el-button>
@@ -52,14 +59,15 @@
   </div>
 </template>
 <script>
-import { getAdminRoleList } from '@/api/role'
+import { getUserList } from '@/api/user'
 export default {
   name: 'UserList',
   components: {},
   data() {
     return {
       searchForm: {
-        name: ''
+        name: '',
+        loginId: ''
       },
       loading: false,
       tableData: [],
@@ -74,11 +82,16 @@ export default {
     this.findList()
   },
   methods: {
+    onSwitchLock($event, id) {
+      const status = $event
+      console.log('启用禁用' + id + '-' + status)
+      // todo 提交后台，同时这个考虑下权限控制
+    },
     findList() {
       this.loading = true
       const currentPage = this.tablePage.currentPage
       const pageSize = this.tablePage.pageSize
-      getAdminRoleList({ currentPage, pageSize }).then(({ code, data }) => {
+      getUserList({ currentPage, pageSize }).then(({ code, data }) => {
         if (code === 20000) {
           this.tableData = data.items
           this.tablePage.totalResult = data.totalResult
