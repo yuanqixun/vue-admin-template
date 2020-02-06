@@ -1,26 +1,35 @@
 <template>
   <el-menu class="navbar" mode="horizontal" router :default-active="$route.matched[0].path">
     <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
-    <el-menu-item v-for="route in topRoutes" :key="route.path" :index="route.path">
-      <span>{{ route.meta.title }}</span>
-    </el-menu-item>
+    <template v-if="showTopNavBar">
+      <el-menu-item v-for="route in topRoutes" :key="route.path" :index="route.path">
+        <span>{{ route.meta.title }}</span>
+      </el-menu-item>
+    </template>
+    <template v-else>
+      <breadcrumb />
+    </template>
     <div class="right-menu">
       <template v-if="device!=='mobile'">
         <search id="header-search" class="right-menu-item" />
         <screenfull id="screenfull" class="right-menu-item hover-effect" />
-
       </template>
-      <el-dropdown class="avatar-container" trigger="click">
-        <div class="avatar-wrapper">
+      <el-dropdown class="avatar-container" trigger="hover">
+        <a class="avatar-wrapper">
           <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
           <i class="el-icon-caret-bottom" />
-        </div>
+          <span>袁启勋</span>
+        </a>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
           <router-link to="/profile/index">
-            <el-dropdown-item>Profile</el-dropdown-item>
+            <el-dropdown-item>
+              <i class="el-icon-setting" />
+              <span>个人设置</span>
+            </el-dropdown-item>
           </router-link>
           <el-dropdown-item divided @click.native="logout">
-            <span style="display:block;">Log Out</span>
+            <i class="el-icon-s-fold" />
+            <span>注销</span>
           </el-dropdown-item>
         </el-dropdown-menu>
       </el-dropdown>
@@ -38,15 +47,22 @@
 </style>
 <script>
 import { mapGetters } from 'vuex'
+import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 import Screenfull from '@/components/Screenfull'
 import Search from '@/components/HeaderSearch'
 
 export default {
   components: {
+    Breadcrumb,
     Hamburger,
     Screenfull,
     Search
+  },
+  data() {
+    return {
+      showTopNavBar: this.$store.state.settings.showTopNavBar
+    }
   },
   computed: {
     ...mapGetters([
@@ -72,8 +88,8 @@ export default {
 
 <style lang="scss" scoped>
   .navbar {
-    height: 60px;
-    line-height: 60px;
+    height: 56px;
+    line-height: 56px;
     .el-menu-item {
       height: 100%;
     }
@@ -135,8 +151,8 @@ export default {
 
           .user-avatar {
             cursor: pointer;
-            width: 40px;
-            height: 40px;
+            width: 30px;
+            height: 30px;
             border-radius: 10px;
           }
 

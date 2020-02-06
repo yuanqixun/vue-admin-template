@@ -1,10 +1,19 @@
 <template>
   <div class="app-container">
-    用户设置
-    <el-form ref="form" :model="form" label-width="120px">
-      <el-form-item label="Activity name">
-        <el-input v-model="form.name" />
+    <el-form label-width="120px">
+      <el-form-item label="多页签支持">
+        <el-switch v-model="tagsView" class="drawer-switch" />
       </el-form-item>
+      <el-form-item label="固定标签栏">
+        <el-switch v-model="fixedHeader" class="drawer-switch" />
+      </el-form-item>
+      <el-form-item label="侧边栏LOGO">
+        <el-switch v-model="sidebarLogo" class="drawer-switch" />
+      </el-form-item>
+      <el-form-item label="顶部导航栏">
+        <el-switch v-model="showTopNavBar" class="drawer-switch" />
+      </el-form-item>
+
     </el-form>
   </div>
 </template>
@@ -27,19 +36,55 @@ export default {
       'name',
       'avatar',
       'roles'
-    ])
-  },
-  created() {
-    this.getUser()
-  },
-  methods: {
-    getUser() {
-      this.user = {
-        name: this.name,
-        email: 'admin@test.com',
-        avatar: this.avatar
+    ]),
+    fixedHeader: {
+      get() {
+        return this.$store.state.settings.fixedHeader
+      },
+      set(val) {
+        this.$store.dispatch('settings/changeSetting', {
+          key: 'fixedHeader',
+          value: val
+        })
+      }
+    },
+    tagsView: {
+      get() {
+        return this.$store.state.settings.tagsView
+      },
+      set(val) {
+        this.$store.dispatch('settings/changeSetting', {
+          key: 'tagsView',
+          value: val
+        })
+      }
+    },
+    sidebarLogo: {
+      get() {
+        return this.$store.state.settings.sidebarLogo
+      },
+      set(val) {
+        this.$store.dispatch('settings/changeSetting', {
+          key: 'sidebarLogo',
+          value: val
+        })
+      }
+    },
+    showTopNavBar: {
+      get() {
+        return this.$store.state.settings.showTopNavBar
+      },
+      set(val) {
+        this.$store.dispatch('settings/changeSetting', {
+          key: 'showTopNavBar',
+          value: val
+        })
       }
     }
+  },
+  created() {
+  },
+  methods: {
   }
 }
 </script>

@@ -31,13 +31,16 @@ export default {
       'permission_routes',
       'sidebar'
     ]),
+    showTopNavBar() {
+      return this.$store.state.settings.showTopNavBar
+    },
     topRoute() {
       return this.$route.matched[0]
     },
-    topPath() {
-      return this.topRoute.path + '/'
-    },
     availableRoutes() {
+      if (!this.showTopNavBar) {
+        return this.permission_routes
+      }
       const wantedRoutes = this.permission_routes.find(r => r.path === this.topRoute.path)
       const aa = (wantedRoutes && wantedRoutes.children) || []
       return aa
