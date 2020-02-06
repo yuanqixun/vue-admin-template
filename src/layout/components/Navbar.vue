@@ -1,5 +1,9 @@
 <template>
-  <el-menu class="navbar" mode="horizontal" router :default-active="$route.matched[0].path">
+  <el-menu class="navbar"
+           background-color="#f5f7fa"
+           text-color="#606266"
+           active-text-color="#1682e6"
+           mode="horizontal" router :default-active="$route.matched[0].path">
     <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
     <template v-if="showTopNavBar">
       <el-menu-item v-for="route in topRoutes" :key="route.path" :index="route.path">
@@ -15,11 +19,11 @@
         <screenfull id="screenfull" class="right-menu-item hover-effect" />
       </template>
       <el-dropdown class="avatar-container" trigger="hover">
-        <a class="avatar-wrapper">
-          <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
+        <div class="avatar-wrapper">
+          <el-avatar size="small" :src="avatar+'?imageView2/1/w/80/h/80'"></el-avatar>
           <i class="el-icon-caret-bottom" />
           <span>袁启勋</span>
-        </a>
+        </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
           <router-link to="/profile/index">
             <el-dropdown-item>
@@ -37,13 +41,13 @@
   </el-menu>
 </template>
 <style>
-  .el-menu--horizontal>.el-menu-item {
-    border-bottom: none !important;
-  }
-  .el-menu--horizontal>.el-menu-item.is-active {
-    border-top: 2px solid #1890ff !important;
-    border-bottom: none !important;
-  }
+  /*.el-menu--horizontal>.el-menu-item {*/
+  /*  border-bottom: none !important;*/
+  /*}*/
+  /*.el-menu--horizontal>.el-menu-item.is-active {*/
+  /*  border-top: 2px solid #1890ff !important;*/
+  /*  border-bottom: none !important;*/
+  /*}*/
 </style>
 <script>
 import { mapGetters } from 'vuex'
@@ -130,7 +134,7 @@ export default {
         height: 100%;
         font-size: 18px;
         color: #5a5e66;
-        vertical-align: text-bottom;
+        vertical-align: middle;
 
         &.hover-effect {
           cursor: pointer;
