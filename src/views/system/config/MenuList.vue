@@ -43,9 +43,10 @@
   </div>
 </template>
 <script>
+/* eslint-disable */
 import { getAdminMenuList } from '@/api/menu'
 export default {
-  name: 'MenuList',
+  name: 'sytem_config_MenuList',
   data() {
     return {
       tableData: []
@@ -63,7 +64,6 @@ export default {
         }
       }).catch(e => {
         console.log(e)
-        debugger
         this.loading = false
       })
     },

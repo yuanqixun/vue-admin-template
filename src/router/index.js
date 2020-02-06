@@ -87,15 +87,19 @@ export function resetRouter() {
 
 // 所有的页面，用以匹配动态路由
 export const allViews = {
-  BaseForm: () => import('@/views/demo/baseForm'),
-  AdvanceForm: () => import('@/views/demo/advanceForm'),
-  Vgrid: () => import('@/views/demo/vgrid'),
-  Vtable: () => import('@/views/demo/vtable'),
-  MenuList: () => import('@/views/system/MenuList'),
-  RoleList: () => import('@/views/system/RoleList'),
-  RoleDetail: () => import('@/views/system/RoleDetail'),
-  UserList: () => import('@/views/system/UserList'),
-  UserDetail: () => import('@/views/system/UserDetail'),
+  demo_base: () => import('@/views/demo/index'),
+  demo_base_BaseForm: () => import('@/views/demo/base/BaseForm'),
+  demo_base_AdvanceForm: () => import('@/views/demo/base/AdvanceForm'),
+  Vgrid: () => import('@/views/demo/base/vgrid'),
+  Vtable: () => import('@/views/demo/base/vtable'),
+  system_config: () => import('@/views/system/index'),
+  system_config_MenuList: () => import('@/views/system/config/MenuList'),
+  system_config_RoleList: () => import('@/views/system/config/RoleList'),
+  system_config_RoleDetail: () => import('@/views/system/config/RoleDetail'),
+  RoleList: () => import('@/views/system/config/RoleList'),
+  RoleDetail: () => import('@/views/system/config/RoleDetail'),
+  UserList: () => import('@/views/system/config/UserList'),
+  UserDetail: () => import('@/views/system/config/UserDetail'),
   404: () => import('@/views/404')
 }
 

@@ -32,7 +32,7 @@
       <vxe-table-column field="createdDate" title="创建日期" width="150" />
       <vxe-table-column title="操作" align="center" width="200">
         <template v-slot="{ row }">
-          <router-link :to="{path:'/system/RoleDetail',query:{id:row.id}}">
+          <router-link :to="{path:'/system/config/RoleDetail',query:{id:row.id}}">
             <el-button type="primary" size="mini" icon="el-icon-edit">编辑</el-button>
           </router-link>
           <el-button type="danger" size="mini" icon="el-icon-delete">删除</el-button>

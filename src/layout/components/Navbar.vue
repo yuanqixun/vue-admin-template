@@ -1,9 +1,9 @@
 <template>
-  <div class="navbar">
+  <el-menu class="navbar" mode="horizontal" router :default-active="$route.matched[0].path">
     <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
-
-    <breadcrumb class="breadcrumb-container" />
-
+    <el-menu-item v-for="route in topRoutes" :key="route.path" :index="route.path">
+      <span>{{ route.meta.title }}</span>
+    </el-menu-item>
     <div class="right-menu">
       <template v-if="device!=='mobile'">
         <search id="header-search" class="right-menu-item" />
@@ -25,19 +25,25 @@
         </el-dropdown-menu>
       </el-dropdown>
     </div>
-  </div>
+  </el-menu>
 </template>
-
+<style>
+  .el-menu--horizontal>.el-menu-item {
+    border-bottom: none !important;
+  }
+  .el-menu--horizontal>.el-menu-item.is-active {
+    border-top: 2px solid #1890ff !important;
+    border-bottom: none !important;
+  }
+</style>
 <script>
 import { mapGetters } from 'vuex'
-import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
 import Screenfull from '@/components/Screenfull'
 import Search from '@/components/HeaderSearch'
 
 export default {
   components: {
-    Breadcrumb,
     Hamburger,
     Screenfull,
     Search
@@ -47,7 +53,10 @@ export default {
       'sidebar',
       'avatar',
       'device'
-    ])
+    ]),
+    topRoutes() {
+      return this.$store.getters.permission_routes.filter(r => r.meta && r.meta.grade === 0)
+    }
   },
   methods: {
     toggleSideBar() {
@@ -63,12 +72,11 @@ export default {
 
 <style lang="scss" scoped>
   .navbar {
-    height: 50px;
-    overflow: hidden;
-    position: relative;
-    background: #fff;
-    box-shadow: 0 1px 4px rgba(0,21,41,.08);
-
+    height: 56px;
+    line-height: 56px;
+    .el-menu-item {
+      height: 100%;
+    }
     .hamburger-container {
       line-height: 46px;
       height: 100%;

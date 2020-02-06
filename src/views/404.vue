@@ -13,7 +13,7 @@
           <a style="color:#20a0ff" href="https://wallstreetcn.com" target="_blank">wallstreetcn</a>
         </div>
         <div class="bullshit__headline">{{ message }}</div>
-        <div class="bullshit__info">Please check that the URL you entered is correct, or click the button below to return to the homepage.</div>
+        <div class="bullshit__info">{{ $route.fullPath }}</div>
         <a href="javascript:void(0)" class="bullshit__return-home" @click="closePage">关闭页面</a>
       </div>
     </div>
@@ -25,7 +25,7 @@ export default {
   name: 'Page404',
   computed: {
     message() {
-      return 'The webmaster said that you can not enter this page...'
+      return '页面未找到'
     }
   },
   methods: {
