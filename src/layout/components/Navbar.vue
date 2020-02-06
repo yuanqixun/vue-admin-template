@@ -20,9 +20,9 @@
       </template>
       <el-dropdown class="avatar-container" trigger="hover">
         <div class="avatar-wrapper">
-          <el-avatar size="small" :src="avatar+'?imageView2/1/w/80/h/80'"></el-avatar>
+          <el-avatar size="small" style="vertical-align: middle" :src="avatar+'?imageView2/1/w/80/h/80'"></el-avatar>
+          <span>{{ userName }}</span>
           <i class="el-icon-caret-bottom" />
-          <span>袁启勋</span>
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
           <router-link to="/profile/index">
@@ -76,6 +76,9 @@ export default {
     ]),
     topRoutes() {
       return this.$store.getters.permission_routes.filter(r => r.meta && r.meta.grade === 0)
+    },
+    userName() {
+      return this.$store.getters.name
     }
   },
   methods: {
