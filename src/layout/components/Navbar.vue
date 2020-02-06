@@ -72,8 +72,8 @@ export default {
 
 <style lang="scss" scoped>
   .navbar {
-    height: 56px;
-    line-height: 56px;
+    height: 60px;
+    line-height: 60px;
     .el-menu-item {
       height: 100%;
     }
