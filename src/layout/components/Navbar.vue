@@ -122,7 +122,7 @@ export default {
     .right-menu {
       float: right;
       height: 100%;
-      line-height: 50px;
+      line-height: 55px;
 
       &:focus {
         outline: none;
@@ -148,9 +148,9 @@ export default {
 
       .avatar-container {
         margin-right: 30px;
+        cursor: pointer;
 
         .avatar-wrapper {
-          margin-top: 5px;
           position: relative;
 
           .user-avatar {
