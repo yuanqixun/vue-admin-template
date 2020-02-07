@@ -45,23 +45,23 @@ export const constantRoutes = [
   {
     path: '/',
     component: Layout,
-    redirect: '/dashboard',
+    redirect: '/',
     children: [{
-      path: 'dashboard',
+      path: '/',
       name: 'Dashboard',
-      component: () => import('@/views/dashboard/index'),
+      component: () => import('@/views/index'),
       meta: { title: '首页', icon: 'el-icon-odometer', affix: true }
     }]
   },
   {
-    path: '/profile',
+    path: '/system/config/userProfile',
     component: Layout,
     redirect: 'noRedirect',
     children: [
       {
-        path: 'index',
-        name: 'Profile',
-        component: () => import('@/views/profile/index'),
+        path: '/system/config/userProfile',
+        name: 'system_config_UserProfile',
+        component: () => import('@/views/system/config/UserProfile'),
         meta: {
           title: '个人设置'
         },

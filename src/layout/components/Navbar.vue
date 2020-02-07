@@ -1,9 +1,13 @@
 <template>
-  <el-menu class="navbar"
-           background-color="#f5f7fa"
-           text-color="#606266"
-           active-text-color="#1682e6"
-           mode="horizontal" router :default-active="$route.matched[0].path">
+  <el-menu
+    class="navbar"
+    background-color="#f5f7fa"
+    text-color="#606266"
+    active-text-color="#1682e6"
+    mode="horizontal"
+    router
+    :default-active="$route.matched[0].path"
+  >
     <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
     <template v-if="showTopNavBar">
       <el-menu-item v-for="route in topRoutes" :key="route.path" :index="route.path">
@@ -20,12 +24,12 @@
       </template>
       <el-dropdown class="avatar-container" trigger="hover">
         <div class="avatar-wrapper">
-          <el-avatar size="small" style="vertical-align: middle" :src="avatar+'?imageView2/1/w/80/h/80'"></el-avatar>
+          <el-avatar size="small" style="vertical-align: middle" :src="avatar+'?imageView2/1/w/80/h/80'" />
           <span>{{ userName }}</span>
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
-          <router-link to="/profile/index">
+          <router-link to="/system/config/userProfile">
             <el-dropdown-item>
               <i class="el-icon-setting" />
               <span>个人设置</span>
@@ -56,6 +60,7 @@ import Hamburger from '@/components/Hamburger'
 import Screenfull from '@/components/Screenfull'
 import Search from '@/components/HeaderSearch'
 
+/* eslint-disable */
 export default {
   components: {
     Breadcrumb,

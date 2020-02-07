@@ -20,9 +20,9 @@
 
 <script>
 import { mapGetters } from 'vuex'
-
+/* eslint-disable */
 export default {
-  name: 'Profile',
+  name: 'system_config_UserProfile',
   components: { },
   data() {
     return {
