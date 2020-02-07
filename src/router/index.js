@@ -54,16 +54,48 @@ export const constantRoutes = [
     }]
   },
   {
-    path: '/system/config/userProfile',
+    path: '/system/config/UserProfile',
     component: Layout,
     redirect: 'noRedirect',
     children: [
       {
-        path: '/system/config/userProfile',
+        path: '/system/config/UserProfile',
         name: 'system_config_UserProfile',
         component: () => import('@/views/system/config/UserProfile'),
         meta: {
           title: '个人设置'
+        },
+        hidden: true
+      }
+    ]
+  },
+  {
+    path: '/system/config/UserDetail',
+    component: Layout,
+    redirect: 'noRedirect',
+    children: [
+      {
+        path: '/system/config/UserDetail',
+        name: 'system_config_UserDetail',
+        component: () => import('@/views/system/config/UserDetail'),
+        meta: {
+          title: '用户详情'
+        },
+        hidden: true
+      }
+    ]
+  },
+  {
+    path: '/system/config/RoleDetail',
+    component: Layout,
+    redirect: 'noRedirect',
+    children: [
+      {
+        path: '/system/config/RoleDetail',
+        name: 'system_config_RoleDetail',
+        component: () => import('@/views/system/config/RoleDetail'),
+        meta: {
+          title: '角色详情'
         },
         hidden: true
       }
@@ -95,11 +127,7 @@ export const allViews = {
   system_config: () => import('@/views/system/index'),
   system_config_MenuList: () => import('@/views/system/config/MenuList'),
   system_config_RoleList: () => import('@/views/system/config/RoleList'),
-  system_config_RoleDetail: () => import('@/views/system/config/RoleDetail'),
-  RoleList: () => import('@/views/system/config/RoleList'),
-  RoleDetail: () => import('@/views/system/config/RoleDetail'),
-  UserList: () => import('@/views/system/config/UserList'),
-  UserDetail: () => import('@/views/system/config/UserDetail'),
+  system_config_UserList: () => import('@/views/system/config/UserList'),
   404: () => import('@/views/404')
 }
 

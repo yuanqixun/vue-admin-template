@@ -39,7 +39,7 @@
       </vxe-table-column>
       <vxe-table-column title="操作" align="left">
         <template v-slot="{ row }">
-          <router-link :to="{path:'/system/UserDetail',query:{id:row.id}}">
+          <router-link :to="{path:'/system/config/UserDetail',query:{id:row.id}}">
             <el-button type="primary" size="mini" icon="el-icon-edit">编辑</el-button>
           </router-link>
           <el-button type="danger" size="mini" icon="el-icon-delete">删除</el-button>

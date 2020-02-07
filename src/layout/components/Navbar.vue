@@ -29,7 +29,7 @@
           <i class="el-icon-caret-bottom" />
         </div>
         <el-dropdown-menu slot="dropdown" class="user-dropdown">
-          <router-link to="/system/config/userProfile">
+          <router-link to="/system/config/UserProfile">
             <el-dropdown-item>
               <i class="el-icon-setting" />
               <span>个人设置</span>

@@ -42,8 +42,9 @@
 </template>
 <script>
 import { getUserDetail } from '@/api/user'
+/* eslint-disable */
 export default {
-  name: 'UserDetail',
+  name: 'system_config_UserDetail',
   data() {
     return {
       form: {
