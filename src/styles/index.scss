@@ -63,3 +63,20 @@ div:focus {
 .app-container {
   padding: 20px;
 }
+
+// 自定义的全局样式
+.el-dialog__body {
+  padding: 10px 20px !important;
+}
+
+.el-dialog__header {
+  border-bottom: 1px solid #e8eaec;
+  padding: 14px 16px !important;
+  line-height: 1;
+}
+
+.el-dialog__footer {
+  border-top: 1px solid #e8eaec;
+  padding: 12px 18px !important;
+  text-align: right;
+}

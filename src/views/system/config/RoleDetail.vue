@@ -21,6 +21,15 @@
         <el-button size="small" icon="el-icon-bottom" @click="$refs.xTree.setAllTreeExpansion(true)">展开所有</el-button>
         <el-button size="small" icon="el-icon-top" @click="$refs.xTree.clearTreeExpand()">关闭所有</el-button>
       </template>
+      <template v-slot:tools>
+        <el-form :inline="true" label-width="0px">
+          <el-form-item>
+            <el-input v-model="searchName" placeholder="查询菜单名称" style="width:130px" />
+            <el-button type="primary" size="mini" @click="filterName">查询</el-button>
+            <el-button size="mini" @click="resetFilter">重置</el-button>
+          </el-form-item>
+        </el-form>
+      </template>
     </vxe-toolbar>
     <vxe-table
       ref="xTree"
@@ -31,17 +40,7 @@
       :tree-config="{expandAll: true, children: 'children',trigger:'cell', line: false, iconOpen: 'el-icon-caret-bottom', iconClose: 'el-icon-caret-right'}"
       @toggle-tree-expand="toggleExpandChangeEvent"
     >
-      <vxe-table-column field="name" width="300" tree-node>
-        <template v-slot:header="{ row }">
-          <div style="text-align: center">名称</div>
-          <el-form :inline="true" label-width="0px">
-            <el-form-item>
-              <el-input v-model="searchName" placeholder="查询菜单名称" style="width:130px" />
-              <el-button type="primary" size="mini" @click="filterName">查询</el-button>
-              <el-button size="mini" @click="resetFilter">重置</el-button>
-            </el-form-item>
-          </el-form>
-        </template>
+      <vxe-table-column field="name" title="菜单名称" width="300" tree-node>
         <template v-slot="{ row }">
           <span>
             <template v-if="row.children && row.children.length">

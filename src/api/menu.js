@@ -7,3 +7,14 @@ export function getAdminMenuList(params) {
     params
   })
 }
+
+export function saveMenuItem(data) {
+  debugger
+  return request({
+    url: '/api/menu/saveMenuItem',
+    method: 'post',
+    data
+  })
+}
+
+
