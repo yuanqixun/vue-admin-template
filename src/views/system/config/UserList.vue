@@ -61,7 +61,7 @@
 <script>
 import { getUserList } from '@/api/user'
 export default {
-  name: 'UserList',
+  name: 'system_config_UserList',
   components: {},
   data() {
     return {
