@@ -128,6 +128,7 @@ export const allViews = {
   system_config_MenuList: () => import('@/views/system/config/MenuList'),
   system_config_RoleList: () => import('@/views/system/config/RoleList'),
   system_config_UserList: () => import('@/views/system/config/UserList'),
+  router_view: () => import('@/views/router'),
   404: () => import('@/views/404')
 }
 

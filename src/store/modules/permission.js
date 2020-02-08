@@ -1,3 +1,4 @@
+import store from '@/store'
 import { constantRoutes, allViews } from '@/router'
 import { getMyMenuList } from '@/api/auth'
 import Layout from '@/layout'
@@ -49,32 +50,28 @@ const mutations = {
 
 function loopTree(list, array) {
   array.forEach((item, i) => {
-    // const _cobj = {}
     if (item.children.length > 0) {
-      // _cobj.path = item.pagePath
-      // _cobj.component = Layout
-      // if (item.grade === 0) {
-      //   _cobj.redirect = item.defaultPagePath
-      // } else {
-      //   _cobj.redirect = 'noRedirect'
-      // }
-      // _cobj.alwaysShow = true
-      // _cobj.meta = { id: item.id, grade: item.grade, icon: 'el-icon-folder', title: item.name, fullPath: item.pagePath }
-      // _cobj.children = []
-      // loopTree(_cobj.children, item.children)
-      // list.push(_cobj)
-      let comp = allViews[item.uuid]
-      if (!comp) {
-        comp = allViews[404]
+      let item_comp = Layout
+      let item_name = ''
+      let item_redirect = 'noRedirect'
+      if(item.grade >= 1){
+        item_comp = allViews['router_view']
+        item_name = 'router_view'
+      }
+      // router_view的key为pagePath
+      item.pagePath = '/' + item.id
+      // 顶部导航时设置为 defaultPagePath
+      if(item.grade == 0 && store.state.settings.showTopNavBar){
+        item_redirect = item.defaultPagePath
       }
       const menu = {
         path: item.pagePath,
-        name: item.uuid,
+        name: item_name,
         hidden: false,
         alwaysShow: true,
-        component: item.grade === 0 ? Layout : comp,
-        redirect: item.grade === 0 ? item.defaultPagePath : 'noRedirect',
-        meta: { id: item.id, grade: item.grade, icon: 'el-icon-folder', title: item.name, fullPath: item.path },
+        component: item_comp,
+        redirect: item_redirect,
+        meta: { id: item.id, grade: item.grade, icon: 'el-icon-folder', title: item.name, fullPath: item.pagePath },
         children: []
       }
       loopTree(menu.children, item.children)
@@ -82,16 +79,16 @@ function loopTree(list, array) {
     } else {
       // 某些菜单关联明细页面，需要增加到路由表中
       const _hidden = item.hidden ? item.hidden : false
-      let comp = allViews[item.uuid]
+      let comp = allViews[item.pagekey]
       if (!comp) {
         comp = allViews[404]
       }
       const menu = {
         path: item.pagePath,
-        name: item.uuid,
+        name: item.pagekey,
         component: comp,
         hidden: _hidden,
-        meta: { id: item.id, grade: item.grade, icon: 'el-icon-document', title: item.name, fullPath: item.path }
+        meta: { id: item.id, grade: item.grade, icon: 'el-icon-document', title: item.name, fullPath: item.pagePath }
       }
       list.push(menu)
     }

@@ -1,6 +1,6 @@
 const state = {
   visitedViews: [],
-  cachedViews: []
+  cachedViews: ['router_view']
 }
 
 const mutations = {
@@ -43,7 +43,7 @@ const mutations = {
       state.cachedViews = state.cachedViews.slice(index, index + 1)
     } else {
       // if index = -1, there is no cached tags
-      state.cachedViews = []
+      state.cachedViews = ['router_view']
     }
   },
 
@@ -53,7 +53,7 @@ const mutations = {
     state.visitedViews = affixTags
   },
   DEL_ALL_CACHED_VIEWS: state => {
-    state.cachedViews = []
+    state.cachedViews = ['router_view']
   },
 
   UPDATE_VISITED_VIEW: (state, view) => {

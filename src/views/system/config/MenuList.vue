@@ -84,7 +84,7 @@
 </template>
 <script>
 /* eslint-disable */
-import { getAdminMenuList, saveMenuItem } from '@/api/menu'
+import { getAdminMenuList, saveMenuItem, remove, moveup, movedown } from '@/api/menu'
 export default {
   name: 'system_config_MenuList',
   data() {
@@ -138,9 +138,9 @@ export default {
   methods: {
     findList() {
       this.loading = true
-      getAdminMenuList({}).then(({ code, data }) => {
-        if (code === 20000) {
-          this.tableData = data
+      getAdminMenuList({}).then(res => {
+        if (res.success) {
+          this.tableData = res.data
         }
       }).catch(e => {
         console.log(e)
@@ -202,20 +202,48 @@ export default {
       this.dialogDetailVisible = true
     },
     onItemMoveUp(rowid) {
-      console.log(rowid)
+      moveup(rowid).then(res => {
+        this.$message({
+          type: 'success',
+          message: res.errmsg
+        })
+        this.findList()
+      })
     },
     onItemMoveDown(rowid) {
-      console.log(rowid)
+      movedown(rowid).then(res => {
+        this.$message({
+          type: 'success',
+          message: res.errmsg
+        })
+        this.findList()
+      })
     },
     onItemRemove(rowid) {
-      console.log(rowid)
+      this.$confirm('确定要删除此菜单吗?', '系统消息', {
+        confirmButtonText: '确定',
+        cancelButtonText: '取消',
+        type: 'warning'
+      }).then(() => {
+        remove(rowid).then(res => {
+          this.$message({
+            type: 'success',
+            message: res.errmsg || '删除成功!'
+          })
+          this.findList()
+        })
+      }).catch(() => {
+
+      });
     },
     btnSaveForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           saveMenuItem(this.form).then(res => {
-            console.log(res)
-            this.resetFrom(formName)
+            if(res.success){
+              this.findList()
+              this.resetFrom(formName)
+            }
           })
         } else {
           return false
