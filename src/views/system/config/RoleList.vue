@@ -1,20 +1,24 @@
 <template>
   <div class="app-container">
     <el-row class="text-left el-collapse-item active">
-      <el-form :inline="true">
-        <el-form-item label="角色名称:">
+      <el-form :model="searchForm" ref="searchForm" :inline="true">
+        <el-form-item label="角色名称:" prop="name"
+                      :rules="[
+                        { required: true, message: '请输入角色名称', trigger: 'blur' }
+                        ]"
+        >
           <el-input v-model="searchForm.name" placeholder="角色名称" />
         </el-form-item>
         <el-form-item label="">
-          <el-button type="primary" size="small">查询</el-button>
-          <el-button type="" size="small">重置</el-button>
+          <el-button type="primary" size="small" @click="btnDoSearch">查询</el-button>
+          <el-button type="" size="small" @click="btnDoReset">重置</el-button>
         </el-form-item>
       </el-form>
     </el-row>
     <vxe-toolbar>
       <template v-slot:buttons>
         <el-button type="primary" size="small" icon="el-icon-plus">新增</el-button>
-        <el-button size="small" icon="el-icon-refresh">刷新</el-button>
+        <el-button size="small" icon="el-icon-refresh" @click="btnDoRefresh">刷新</el-button>
       </template>
     </vxe-toolbar>
     <vxe-table
@@ -39,7 +43,7 @@
         </template>
       </vxe-table-column>
     </vxe-table>
-    <vxe-pager
+    <vxe-pager v-if="tablePage.totalPage > 1"
       background
       size="small"
       :loading="loading"
@@ -66,7 +70,8 @@ export default {
       tablePage: {
         currentPage: 1,
         pageSize: 10,
-        totalResult: 0
+        totalResult: 0,
+        totalPage: 0
       }
     }
   },
@@ -76,12 +81,14 @@ export default {
   methods: {
     findList() {
       this.loading = true
-      const currentPage = this.tablePage.currentPage
+      const pageNumber = this.tablePage.currentPage
       const pageSize = this.tablePage.pageSize
-      getAdminRoleList({ currentPage, pageSize }).then(({ code, data }) => {
-        if (code === 20000) {
-          this.tableData = data.items
-          this.tablePage.totalResult = data.totalResult
+      const searchParams = this.searchForm
+      getAdminRoleList({ pageNumber, pageSize}, searchParams).then(res => {
+        if (res.success) {
+          this.tableData = res.data
+          this.tablePage.totalResult = data.total
+          this.tablePage.totalPage = data.totalPage
         }
         this.loading = false
       }).catch(e => {
@@ -91,6 +98,21 @@ export default {
     handlePageChange({ currentPage, pageSize }) {
       this.tablePage.currentPage = currentPage
       this.tablePage.pageSize = pageSize
+      this.findList()
+    },
+    btnDoSearch() {
+      this.$refs.searchForm.validate((valid) => {
+        if (valid) {
+          this.findList()
+        }
+      })
+    },
+    btnDoReset() {
+      this.searchForm.name = ''
+      this.findList()
+      this.$refs.searchForm.resetFields()
+    },
+    btnDoRefresh() {
       this.findList()
     }
   }

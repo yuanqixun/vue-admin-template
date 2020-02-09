@@ -21,27 +21,35 @@
         <template v-slot="{ row }">
           <span>
             <template v-if="row.children && row.children.length">
-              <i :class="$refs.xTree.isTreeExpandByRow(row) ? 'el-icon-folder-opened' : 'el-icon-folder'" />
+              <i :class="$refs.xTree.isTreeExpandByRow(row) ? 'el-icon-folder-opened' : 'el-icon-folder'"/>
             </template>
             <template v-else>
-              <i class="el-icon-document" />
+              <i class="el-icon-document"/>
             </template>
             <a>{{ row.name }}</a>
           </span>
         </template>
       </vxe-table-column>
-      <vxe-table-column field="pagePath" title="路径" width="300" />
+      <vxe-table-column field="pagePath" title="路径" width="300"/>
+      <vxe-table-column field="subPages" title="子页面" width="300">
+        <template v-slot="{ row }">
+          <el-tag type="success" v-if="row.subPages" v-for="(sub,index) in toArray(row.subPages)" :key="sub.uuid"
+                  :title="sub.pagePath" style="margin-right: 10px;cursor:pointer"
+          >{{ sub.name }}</el-tag>
+        </template>
+      </vxe-table-column>
       <vxe-table-column title="操作">
         <template v-slot="{ row }">
           <el-button type="text" size="mini" icon="el-icon-plus" :title="row.id" :disabled="row.grade >= 2"
-                     @click="onItemAdd(row.id)" />
+                     @click="onItemAdd(row.id)"/>
           <el-button type="text" size="mini" icon="el-icon-top" title="上移" :disabled="row.order == 0"
-                     @click="onItemMoveUp(row.id)" />
-          <el-button type="text" size="mini" icon="el-icon-bottom" title="下移" :disabled="row.gradeSize == 0 || row.order == (row.gradeSize -1) "
-                     @click="onItemMoveDown(row.id)" />
+                     @click="onItemMoveUp(row.id)"/>
+          <el-button type="text" size="mini" icon="el-icon-bottom" title="下移"
+                     :disabled="row.gradeSize == 0 || row.order == (row.gradeSize -1) "
+                     @click="onItemMoveDown(row.id)"/>
           <el-button type="text" size="mini" icon="el-icon-edit" title="编辑" @click="onItemEdit(row.id)"/>
           <el-button type="text" size="mini" icon="el-icon-delete" :disabled="row.children && row.children.length > 0"
-                     @click="onItemRemove(row.id)" />
+                     @click="onItemRemove(row.id)"/>
         </template>
       </vxe-table-column>
     </vxe-table>
@@ -68,11 +76,22 @@
           </el-radio-group>
         </el-form-item>
         <template v-if="canEditPagePath">
-          <el-form-item label="菜单路径" prop="pagePath">
-            <el-input v-model="form.pagePath" autocomplete="off"></el-input>
-          </el-form-item>
+          <el-row>
+            <el-col :span="10">
+            <el-form-item label="绑定功能" prop="pagePath">
+              <el-tree-select v-model="form.uuid" :selectParams="selectParams" :treeParams="treeParams" ref="treeSelect"
+                              @node-click="onFuncSelect"
+              />
+            </el-form-item>
+            </el-col>
+            <el-col :span="14">
+            <el-form-item label="功能路径">
+              <el-input v-model="form.pagePath" autocomplete="off" readonly></el-input>
+            </el-form-item>
+            </el-col>
+          </el-row>
           <el-form-item label="是否隐藏" prop="hidden">
-            <el-switch v-model="form.hidden" active-color="#13ce66" />
+            <el-switch v-model="form.hidden" active-color="#13ce66"/>
           </el-form-item>
         </template>
         <el-form-item label="默认页面" v-if="requireDefaultPagePath" prop="defaultPagePath">
@@ -84,19 +103,44 @@
 </template>
 <script>
 /* eslint-disable */
-import { getAdminMenuList, saveMenuItem, remove, moveup, movedown } from '@/api/menu'
+import { getAdminMenuList, saveMenuItem, remove, moveup, movedown, getAllFunctionList } from '@/api/menu'
+import ElTreeSelect from '@/components/TreeSelect'
+
 export default {
   name: 'system_config_MenuList',
+  components: {
+    ElTreeSelect
+  },
   data() {
     return {
+      selectParams: {
+        clearable: false,
+        placeholder: '请选择系统功能'
+      },
+      treeParams: {
+        clickParent: false,
+        filterable: true,
+        'check-strictly': true,
+        'default-expand-all': true,
+        'expand-on-click-node': false,
+        data: [],
+        props: {
+          label: 'name',
+          value: 'uuid',
+          disabled: 'disabled',
+          children: 'children'
+        }
+      },
       form: {
         pid: null,
         pname: null,
         id: null,
+        uuid: '',
         name: '',
         hidden: false,
         pagePath: '',
         defaultPagePath: '',
+        subPages: '',
         grade: 0,
         type: 0
       },
@@ -134,8 +178,30 @@ export default {
   },
   created() {
     this.findList()
+    this.initFuncList()
   },
   methods: {
+    toArray(str) {
+      if(!str)
+        return
+      return JSON.parse(str)
+    },
+    initFuncList() {
+      getAllFunctionList().then(res =>{
+        if(res.success){
+          this.treeParams.data = res.data
+        }
+      })
+    },
+    // 功能点选择回调
+    onFuncSelect(data, node, vm) {
+      console.log(data)
+      this.form.uuid = data.uuid
+      this.form.pagePath = data.pagePath
+      if(data.subPages) {
+        this.form.subPages = JSON.stringify(data.subPages)
+      }
+    },
     findList() {
       this.loading = true
       getAdminMenuList({}).then(res => {
@@ -159,24 +225,26 @@ export default {
     },
     bindRowAndForm(row) {
       console.log(row)
-      if(row){
+      if (row) {
         this.form.id = row.id
+        this.form.uuid = row.uuid
         this.form.name = row.name
         this.form.pagePath = row.pagePath
         this.form.grade = row.grade
         this.form.defaultPagePath = row.defaultPagePath
-        if(row.hidden)
+        if (row.hidden) {
           this.form.hidden = row.hidden
-        else
+        } else {
           this.form.hidden = false
-        if(row.children && row.children.length >0) {
+        }
+        if (row.children && row.children.length > 0) {
           this.form.type = 0
         } else {
           this.form.type = 1
         }
-        if(row.pid){
+        if (row.pid) {
           let prow = this.getRowDataById(row.pid)
-          if(prow){
+          if (prow) {
             this.form.pid = prow.id
             this.form.pname = prow.name
           }
@@ -234,13 +302,13 @@ export default {
         })
       }).catch(() => {
 
-      });
+      })
     },
     btnSaveForm(formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           saveMenuItem(this.form).then(res => {
-            if(res.success){
+            if (res.success) {
               this.findList()
               this.resetFrom(formName)
             }
@@ -248,7 +316,7 @@ export default {
         } else {
           return false
         }
-      });
+      })
     },
     /**
      * 重置表单
@@ -260,11 +328,13 @@ export default {
         pid: null,
         pname: null,
         id: null,
+        uuid: '',
         name: '',
         type: 0,
         hidden: false,
         pagePath: '',
         defaultPagePath: '',
+        subPages: '',
         grade: 0
       }
       // 重置表单项的验证等信息

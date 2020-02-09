@@ -91,6 +91,25 @@ function loopTree(list, array) {
         meta: { id: item.id, grade: item.grade, icon: 'el-icon-document', title: item.name, fullPath: item.pagePath }
       }
       list.push(menu)
+      if(item.subPages) {
+        const _subPagesArray = JSON.parse(item.subPages)
+        _subPagesArray.forEach((sub,subIndex) => {
+          debugger
+          let subKey = sub.uuid.replace(/([.])/g,"_")
+          let sub_comp = allViews[subKey]
+          if (!sub_comp) {
+            sub_comp = allViews[404]
+          }
+          const hidden_menu = {
+            path: sub.pagePath,
+            name: sub.uuid,
+            component: sub_comp,
+            hidden: true,
+            meta: { title: sub.name, fullPath: sub.pagePath }
+          }
+          list.push(hidden_menu)
+        })
+      }
     }
   })
 }

@@ -1,10 +1,11 @@
 import request from '@/utils/request'
 
-export function getAdminRoleList(params) {
+export function getAdminRoleList(pageable,data) {
   return request({
     url: '/api/role/adminRoleList',
-    method: 'get',
-    params
+    method: 'post',
+    params: pageable,
+    data
   })
 }
 

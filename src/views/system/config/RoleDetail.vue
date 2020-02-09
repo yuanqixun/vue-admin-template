@@ -70,6 +70,7 @@
 </template>
 <script>
 import { getAdminRoleAuthDetail } from '@/api/role'
+
 export default {
   name: 'RoleDetail',
   data() {
@@ -104,9 +105,9 @@ export default {
     },
     findList() {
       this.loading = true
-      getAdminRoleAuthDetail({ id: '111' }).then(({ code, data }) => {
-        if (code === 20000) {
-          this.tableData = data
+      getAdminRoleAuthDetail({ id: '111' }).then(res => {
+        if (res.success) {
+          this.tableData = res.data
         }
       }).catch(e => {
         console.log(e)
