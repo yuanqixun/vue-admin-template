@@ -94,7 +94,6 @@ function loopTree(list, array) {
       if(item.subPages) {
         const _subPagesArray = JSON.parse(item.subPages)
         _subPagesArray.forEach((sub,subIndex) => {
-          debugger
           let subKey = sub.uuid.replace(/([.])/g,"_")
           let sub_comp = allViews[subKey]
           if (!sub_comp) {
@@ -102,7 +101,7 @@ function loopTree(list, array) {
           }
           const hidden_menu = {
             path: sub.pagePath,
-            name: sub.uuid,
+            name: subKey,
             component: sub_comp,
             hidden: true,
             meta: { title: sub.name, fullPath: sub.pagePath }

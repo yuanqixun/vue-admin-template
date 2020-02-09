@@ -72,7 +72,7 @@
 import { getAdminRoleAuthDetail } from '@/api/role'
 
 export default {
-  name: 'RoleDetail',
+  name: 'system_config_RoleDetail',
   data() {
     return {
       searchName: '',
