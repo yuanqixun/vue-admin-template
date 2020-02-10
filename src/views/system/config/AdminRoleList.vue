@@ -114,7 +114,7 @@ export default {
     },
     btnDoAdd() {
       this.$router.push({
-        path:'/system/config/RoleDetail'
+        path:'/system/config/AdminRoleDetail'
       })
     },
     btnDoRefresh() {

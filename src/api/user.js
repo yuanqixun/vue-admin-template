@@ -36,3 +36,19 @@ export function getUserList(pageable,data) {
     data
   })
 }
+
+export function getEditUserDetail(params) {
+  return request({
+    url: '/api/user/editUserDetail',
+    method: 'post',
+    params
+  })
+}
+
+export function saveUserDetail(data) {
+  return request({
+    url: '/api/user/saveUserDetail',
+    method: 'post',
+    data
+  })
+}
