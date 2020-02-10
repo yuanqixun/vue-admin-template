@@ -187,11 +187,7 @@ export default {
       return JSON.parse(str)
     },
     initFuncList() {
-      getAllFunctionList().then(res =>{
-        if(res.success){
-          this.treeParams.data = res.data
-        }
-      })
+      this.treeParams.data = this.$storage.get("funcList")
     },
     // 功能点选择回调
     onFuncSelect(data, node, vm) {

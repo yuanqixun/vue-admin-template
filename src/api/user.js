@@ -28,10 +28,11 @@ export function logout() {
  * @param params
  * @returns {AxiosPromise}
  */
-export function getUserList(params) {
+export function getUserList(pageable,data) {
   return request({
     url: '/api/user/userList',
-    method: 'get',
-    params
+    method: 'post',
+    params: pageable,
+    data
   })
 }

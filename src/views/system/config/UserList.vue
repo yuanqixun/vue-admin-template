@@ -1,16 +1,16 @@
 <template>
   <div class="app-container">
     <el-row class="text-left el-collapse-item active">
-      <el-form :inline="true">
-        <el-form-item label="用户名称:">
+      <el-form :model="searchForm" ref="searchForm" :inline="true">
+        <el-form-item label="用户名称:" prop="name">
           <el-input v-model="searchForm.name" placeholder="用户名称" />
         </el-form-item>
         <el-form-item label="登陆账号:">
           <el-input v-model="searchForm.loginId" placeholder="登陆账号" />
         </el-form-item>
         <el-form-item label="">
-          <el-button type="primary" size="small">查询</el-button>
-          <el-button type="" size="small">重置</el-button>
+          <el-button type="primary" size="small" @click="btnDoSearch">查询</el-button>
+          <el-button type="" size="small" @click="btnDoReset">重置</el-button>
         </el-form-item>
       </el-form>
     </el-row>
@@ -46,7 +46,7 @@
         </template>
       </vxe-table-column>
     </vxe-table>
-    <vxe-pager
+    <vxe-pager v-if="tablePage.totalPage > 1"
       background
       size="small"
       :loading="loading"
@@ -89,12 +89,14 @@ export default {
     },
     findList() {
       this.loading = true
-      const currentPage = this.tablePage.currentPage
+      const pageNumber = this.tablePage.currentPage
       const pageSize = this.tablePage.pageSize
-      getUserList({ currentPage, pageSize }).then(({ code, data }) => {
-        if (code === 20000) {
-          this.tableData = data.items
-          this.tablePage.totalResult = data.totalResult
+      const searchParams = this.searchForm
+      getUserList({ pageNumber, pageSize },searchParams).then(res => {
+        if (res.success) {
+          this.tableData = res.data
+          this.tablePage.totalResult = res.total
+          this.tablePage.totalPage = res.totalPage
         }
         this.loading = false
       }).catch(e => {
@@ -104,6 +106,22 @@ export default {
     handlePageChange({ currentPage, pageSize }) {
       this.tablePage.currentPage = currentPage
       this.tablePage.pageSize = pageSize
+      this.findList()
+    },
+    btnDoSearch() {
+      this.$refs.searchForm.validate((valid) => {
+        if (valid) {
+          this.findList()
+        }
+      })
+    },
+    btnDoReset() {
+      this.searchForm.name = ''
+      this.searchForm.loginId = ''
+      this.findList()
+      this.$refs.searchForm.resetFields()
+    },
+    btnDoRefresh() {
       this.findList()
     }
   }

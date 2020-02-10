@@ -17,7 +17,7 @@
     </el-row>
     <vxe-toolbar>
       <template v-slot:buttons>
-        <el-button type="primary" size="small" icon="el-icon-plus">新增</el-button>
+        <el-button type="primary" size="small" icon="el-icon-plus" @click="btnDoAdd">新增</el-button>
         <el-button size="small" icon="el-icon-refresh" @click="btnDoRefresh">刷新</el-button>
       </template>
     </vxe-toolbar>
@@ -56,7 +56,7 @@
   </div>
 </template>
 <script>
-import { getAdminRoleList } from '@/api/role'
+import { getEditRoleList } from '@/api/role'
 export default {
   name: 'system_config_RoleList',
   components: {},
@@ -84,11 +84,11 @@ export default {
       const pageNumber = this.tablePage.currentPage
       const pageSize = this.tablePage.pageSize
       const searchParams = this.searchForm
-      getAdminRoleList({ pageNumber, pageSize}, searchParams).then(res => {
+      getEditRoleList({ pageNumber, pageSize}, searchParams).then(res => {
         if (res.success) {
           this.tableData = res.data
-          this.tablePage.totalResult = data.total
-          this.tablePage.totalPage = data.totalPage
+          this.tablePage.totalResult = res.total
+          this.tablePage.totalPage = res.totalPage
         }
         this.loading = false
       }).catch(e => {
@@ -111,6 +111,11 @@ export default {
       this.searchForm.name = ''
       this.findList()
       this.$refs.searchForm.resetFields()
+    },
+    btnDoAdd() {
+      this.$router.push({
+        path:'/system/config/RoleDetail'
+      })
     },
     btnDoRefresh() {
       this.findList()

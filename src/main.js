@@ -10,6 +10,7 @@ import '@/styles/index.scss' // global css
 // vxetable
 import XEUtils from 'xe-utils'
 import VXETable from 'vxe-table'
+import {Vue2Storage} from 'vue2-storage'
 import 'vxe-table/lib/index.css'
 
 import App from './App'
@@ -18,6 +19,7 @@ import router from './router'
 
 import '@/icons' // icon
 import '@/permission' // permission control
+import { readAllFunction } from '@/utils/fd-reader'
 
 /**
  * If you don't want to use mock-server
@@ -40,6 +42,12 @@ Vue.use(ElementUI, { size: 'small', zIndex: 3000 })
 
 Vue.use(VXETable)
 Vue.prototype.$XEUtils = XEUtils
+Vue.use(Vue2Storage, {
+  prefix: 'app_',
+  driver: 'local',
+  ttl: 60 * 60 * 24 * 1000 // 24 hours
+})
+
 /**
  * 关闭页签
  */
@@ -58,5 +66,8 @@ new Vue({
   el: '#app',
   router,
   store,
+  mounted() {
+    readAllFunction(this)
+  },
   render: h => h(App)
 })

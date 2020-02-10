@@ -68,23 +68,23 @@ export const constantRoutes = [
         hidden: true
       }
     ]
-  },
-  {
-    path: '/system/config/UserDetail',
-    component: Layout,
-    redirect: 'noRedirect',
-    children: [
-      {
-        path: '/system/config/UserDetail',
-        name: 'system_config_UserDetail',
-        component: () => import('@/views/system/config/UserDetail'),
-        meta: {
-          title: '用户详情'
-        },
-        hidden: true
-      }
-    ]
   }
+  // {
+  //   path: '/system/config/UserDetail',
+  //   component: Layout,
+  //   redirect: 'noRedirect',
+  //   children: [
+  //     {
+  //       path: '/system/config/UserDetail',
+  //       name: 'system_config_UserDetail',
+  //       component: () => import('@/views/system/config/UserDetail'),
+  //       meta: {
+  //         title: '用户详情'
+  //       },
+  //       hidden: true
+  //     }
+  //   ]
+  // }
   // {
   //   path: '/system/config/RoleDetail',
   //   component: Layout,
@@ -129,6 +129,7 @@ export const allViews = {
   system_config_RoleList: () => import('@/views/system/config/RoleList'),
   system_config_RoleDetail: () => import('@/views/system/config/RoleDetail'),
   system_config_UserList: () => import('@/views/system/config/UserList'),
+  system_config_UserDetail: () => import('@/views/system/config/UserDetail'),
   router_view: () => import('@/views/router'),
   404: () => import('@/views/404')
 }

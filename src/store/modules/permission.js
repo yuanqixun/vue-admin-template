@@ -79,13 +79,14 @@ function loopTree(list, array) {
     } else {
       // 某些菜单关联明细页面，需要增加到路由表中
       const _hidden = item.hidden ? item.hidden : false
-      let comp = allViews[item.pagekey]
+      let viewkey = item.uuid.replace(/([.])/g,"_")
+      let comp = allViews[viewkey]
       if (!comp) {
         comp = allViews[404]
       }
       const menu = {
         path: item.pagePath,
-        name: item.pagekey,
+        name: viewkey,
         component: comp,
         hidden: _hidden,
         meta: { id: item.id, grade: item.grade, icon: 'el-icon-document', title: item.name, fullPath: item.pagePath }

@@ -1,8 +1,8 @@
 import request from '@/utils/request'
 
-export function getAdminRoleList(pageable,data) {
+export function getEditRoleList(pageable,data) {
   return request({
-    url: '/api/role/adminRoleList',
+    url: '/api/role/editRoleList',
     method: 'post',
     params: pageable,
     data
@@ -14,10 +14,18 @@ export function getAdminRoleList(pageable,data) {
  * @param params
  * @returns {AxiosPromise}
  */
-export function getAdminRoleAuthDetail(params) {
+export function getEditRoleAuthDetail(params) {
   return request({
-    url: '/api/role/adminRoleAuthDetail',
-    method: 'get',
+    url: '/api/role/editRoleAuthDetail',
+    method: 'post',
     params
+  })
+}
+
+export function saveForm(data) {
+  return request({
+    url: '/api/role/saveRoleAuthDetail',
+    method: 'post',
+    data
   })
 }
