@@ -8,13 +8,63 @@
         "name": "系统配置",
         "children": [
           {
+            "uuid": "system.config.AdminMenuList",
+            "name": "平台菜单",
+            "pagePath": "/system/config/AdminMenuList"
+          },
+          {
+            "uuid": "system.config.AdminRoleList",
+            "name": "平台角色",
+            "pagePath": "/system/config/AdminRoleList",
+            "subPages": [
+              {
+                "uuid": "system.config.AdminRoleDetail",
+                "name": "平台角色详情",
+                "pagePath": "/system/config/AdminRoleDetail"
+              },
+              {
+                "uuid": "system.config.AdminRoleMember",
+                "name": "平台角色成员",
+                "pagePath": "/system/config/AdminRoleMember"
+              }
+            ],
+            "permis": [
+              {
+                "uuid": "system.config.AdminRoleList.edit",
+                "name": "角色编辑"
+              },
+              {
+                "uuid": "system.config.AdminRoleList.remove",
+                "name": "角色删除"
+              }
+            ]
+          },
+          {
+            "uuid": "system.config.AdminUserList",
+            "name": "平台用户",
+            "pagePath": "/system/config/AdminUserList",
+            "subPages": [
+              {
+                "uuid": "system.config.AdminUserDetail",
+                "name": "平台用户详情",
+                "pagePath": "/system/config/AdminUserDetail"
+              }
+            ],
+            "permis": [
+              {
+                "uuid": "system.config.AdminUserList.remove",
+                "name": "删除用户"
+              }
+            ]
+          },
+          {
             "uuid": "system.config.MenuList",
-            "name": "菜单设置",
+            "name": "商户菜单",
             "pagePath": "/system/config/MenuList"
           },
           {
             "uuid": "system.config.RoleList",
-            "name": "角色管理",
+            "name": "商户角色",
             "pagePath": "/system/config/RoleList",
             "subPages": [
               {
@@ -41,19 +91,19 @@
           },
           {
             "uuid": "system.config.UserList",
-            "name": "用户管理",
+            "name": "商户列表",
             "pagePath": "/system/config/UserList",
             "subPages": [
               {
                 "uuid": "system.config.UserDetail",
-                "name": "用户详情",
+                "name": "商户详情",
                 "pagePath": "/system/config/UserDetail"
               }
             ],
             "permis": [
               {
                 "uuid": "system.config.UserList.remove",
-                "name": "用户删除"
+                "name": "删除商户"
               }
             ]
           }

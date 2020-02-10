@@ -103,11 +103,11 @@
 </template>
 <script>
 /* eslint-disable */
-import { getMenuList, saveMenuItem, remove, moveup, movedown } from '@/api/menu'
+import { getMenuList, saveMenuItem, remove, moveup, movedown } from '@/api/adminmenu'
 import ElTreeSelect from '@/components/TreeSelect'
 
 export default {
-  name: 'system_config_MenuList',
+  name: 'system_config_AdminMenuList',
   components: {
     ElTreeSelect
   },

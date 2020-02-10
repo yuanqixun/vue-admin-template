@@ -125,11 +125,16 @@ export const allViews = {
   Vgrid: () => import('@/views/demo/base/vgrid'),
   Vtable: () => import('@/views/demo/base/vtable'),
   system_config: () => import('@/views/system/index'),
+  system_config_AdminMenuList: () => import('@/views/system/config/AdminMenuList'),
   system_config_MenuList: () => import('@/views/system/config/MenuList'),
   system_config_RoleList: () => import('@/views/system/config/RoleList'),
   system_config_RoleDetail: () => import('@/views/system/config/RoleDetail'),
+  system_config_AdminRoleList: () => import('@/views/system/config/AdminRoleList'),
+  system_config_AdminRoleDetail: () => import('@/views/system/config/AdminRoleDetail'),
   system_config_UserList: () => import('@/views/system/config/UserList'),
   system_config_UserDetail: () => import('@/views/system/config/UserDetail'),
+  system_config_AdminUserList: () => import('@/views/system/config/AdminUserList'),
+  system_config_AdminUserDetail: () => import('@/views/system/config/AdminUserDetail'),
   router_view: () => import('@/views/router'),
   404: () => import('@/views/404')
 }

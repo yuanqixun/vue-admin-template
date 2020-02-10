@@ -50,7 +50,7 @@ const mutations = {
 
 function loopTree(list, array) {
   array.forEach((item, i) => {
-    if (item.children.length > 0) {
+    if (item.children && item.children.length > 0) {
       let item_comp = Layout
       let item_name = ''
       let item_redirect = 'noRedirect'
