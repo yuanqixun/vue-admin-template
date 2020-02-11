@@ -7,8 +7,12 @@
       </el-form-item>
       <el-row>
         <el-col :span="8">
-          <el-form-item label="登陆名：">
-            <el-input v-model="form.username"/>
+          <el-form-item label="登陆名：" prop="username"
+                        :rules="[
+                          { required: true, message: '请输入登陆名', trigger: 'blur' }
+                          ]"
+          >
+            <el-input v-model="form.username" />
           </el-form-item>
         </el-col>
       </el-row>
@@ -16,9 +20,19 @@
         <el-col :span="8">
           <el-form-item label="用户名称：" prop="name"
                         :rules="[
-                          { required: true, message: '请输入菜单名称', trigger: 'blur' }
+                          { required: true, message: '请输入用户名称', trigger: 'blur' }
                           ]">
             <el-input v-model="form.name"/>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row v-if="type === 'add'">
+        <el-col :span="8">
+          <el-form-item label="初始密码：" prop="password"
+                        :rules="[
+                          { required: true, message: '请输入密码', trigger: 'blur' }
+                          ]">
+            <el-input type="password" v-model="form.password"/>
           </el-form-item>
         </el-col>
       </el-row>
@@ -50,10 +64,12 @@ export default {
   name: 'system_config_AdminUserDetail',
   data() {
     return {
+      type:'',
       form: {
         id: null,
         username: '',
         name: '',
+        password: '',
         isEnabled: true,
         authed_roles: []
       },
@@ -61,10 +77,17 @@ export default {
     }
   },
   created() {
-    this.form.id = this.$route.query.id || ''
-    this.getUserDetail()
+    // this.initPage()
+  },
+  activated() {
+    this.initPage()
   },
   methods: {
+    initPage() {
+      this.form.id = this.$route.query.id || ''
+      this.type = this.$route.query.type || ''
+      this.getUserDetail()
+    },
     closePage() {
       this.$closePage()
     },

@@ -61,10 +61,15 @@
       }
     },
     created() {
-      this.form.id = this.$route.query.id || ''
-      this.getUserDetail()
+    },
+    activated() {
+      this.initPage()
     },
     methods: {
+      initPage() {
+        this.form.id = this.$route.query.id || ''
+        this.getUserDetail()
+      },
       closePage() {
         this.$closePage()
       },

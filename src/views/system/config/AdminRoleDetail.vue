@@ -85,10 +85,15 @@ export default {
     }
   },
   created() {
-    this.form.id = this.$route.query.id || ''
-    this.findList()
+  },
+  activated() {
+    this.initPage()
   },
   methods: {
+    initPage() {
+      this.form.id = this.$route.query.id || ''
+      this.findList()
+    },
     closePage() {
       this.$closePage()
     },

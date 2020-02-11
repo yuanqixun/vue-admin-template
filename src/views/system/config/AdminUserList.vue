@@ -16,8 +16,8 @@
     </el-row>
     <vxe-toolbar>
       <template v-slot:buttons>
-        <el-button type="primary" size="small" icon="el-icon-plus">新增</el-button>
-        <el-button size="small" icon="el-icon-refresh">刷新</el-button>
+        <el-button type="primary" size="small" icon="el-icon-plus" @click="btnDoAdd">新增</el-button>
+        <el-button size="small" icon="el-icon-refresh" @click="btnDoRefresh">刷新</el-button>
       </template>
     </vxe-toolbar>
     <vxe-table
@@ -114,6 +114,9 @@ export default {
           this.findList()
         }
       })
+    },
+    btnDoAdd() {
+      this.$router.push({path:'/system/config/AdminUserDetail',query:{type:'add'}})
     },
     btnDoReset() {
       this.searchForm.name = ''
