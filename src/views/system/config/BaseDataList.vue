@@ -2,11 +2,8 @@
   <div class="app-container">
     <el-row class="text-left el-collapse-item active">
       <el-form :model="searchForm" ref="searchForm" :inline="true">
-        <el-form-item label="用户名称:" prop="name">
-          <el-input v-model="searchForm.name" placeholder="用户名称" />
-        </el-form-item>
-        <el-form-item label="登陆账号:">
-          <el-input v-model="searchForm.loginId" placeholder="登陆账号" />
+        <el-form-item label="名称:" prop="name">
+          <el-input v-model="searchForm.name" placeholder="名称" />
         </el-form-item>
         <el-form-item label="">
           <el-button type="primary" size="small" @click="btnDoSearch">查询</el-button>
@@ -30,16 +27,17 @@
       :seq-config="{startIndex: (tablePage.currentPage - 1) * tablePage.pageSize}"
     >
       <vxe-table-column type="seq" title="序号" align="center" width="60" />
-      <vxe-table-column field="username" title="登陆名称" width="150" />
-      <vxe-table-column field="name" title="人员名称" width="150" />
-      <vxe-table-column title="是否锁定" width="80" align="center">
+      <vxe-table-column field="unique_key" title="唯一键值" width="150" />
+      <vxe-table-column field="name" title="名称" width="150" />
+      <vxe-table-column title="可否删除" width="80" align="center">
         <template v-slot="{ row }">
-          <el-switch v-model="row.isEnabled" active-color="#13ce66" @change="onSwitchLock($event,row.id)" />
+          <el-switch v-model="row.deletable" active-color="#13ce66" disabled />
         </template>
       </vxe-table-column>
+      <vxe-table-column field="createdDate" title="创建时间" width="150" />
       <vxe-table-column title="操作" align="left">
         <template v-slot="{ row }">
-          <router-link :to="{path:'/system/config/UserDetail',query:{id:row.id}}">
+          <router-link :to="{path:'/system/config/BaseDataDetail',query:{id:row.id}}">
             <el-button type="primary" size="mini" icon="el-icon-edit">编辑</el-button>
           </router-link>
           <el-button type="danger" size="mini" icon="el-icon-delete">删除</el-button>
@@ -59,9 +57,9 @@
   </div>
 </template>
 <script>
-import { getUserList } from '@/api/user'
+import { getDataList } from '@/api/basedata'
 export default {
-  name: 'system_config_UserList',
+  name: 'system_config_BaseDataList',
   components: {},
   data() {
     return {
@@ -81,6 +79,9 @@ export default {
   created() {
     this.findList()
   },
+  activated() {
+    this.findList()
+  },
   methods: {
     onSwitchLock($event, id) {
       const status = $event
@@ -92,7 +93,7 @@ export default {
       const pageNumber = this.tablePage.currentPage
       const pageSize = this.tablePage.pageSize
       const searchParams = this.searchForm
-      getUserList({ pageNumber, pageSize },searchParams).then(res => {
+      getDataList({ pageNumber, pageSize },searchParams).then(res => {
         if (res.success) {
           this.tableData = res.data
           this.tablePage.totalResult = res.total
@@ -116,7 +117,7 @@ export default {
       })
     },
     btnDoAdd() {
-      this.$router.push({path:'/system/config/UserDetail',query:{type:'add'}})
+      this.$router.push({path:'/system/config/BaseDataDetail',query:{type:'add'}})
     },
     btnDoReset() {
       this.searchForm.name = ''

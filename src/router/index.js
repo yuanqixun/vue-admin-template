@@ -135,6 +135,8 @@ export const allViews = {
   system_config_UserDetail: () => import('@/views/system/config/UserDetail'),
   system_config_AdminUserList: () => import('@/views/system/config/AdminUserList'),
   system_config_AdminUserDetail: () => import('@/views/system/config/AdminUserDetail'),
+  system_config_BaseDataList: () => import('@/views/system/config/BaseDataList'),
+  system_config_BaseDataDetail: () => import('@/views/system/config/BaseDataDetail'),
   router_view: () => import('@/views/router'),
   404: () => import('@/views/404')
 }

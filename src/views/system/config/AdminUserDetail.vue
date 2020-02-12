@@ -93,7 +93,7 @@ export default {
     },
     getUserDetail() {
       getEditUserDetail({ id: this.form.id }).then(res => {
-        if (res.success) {
+        if (res.success && res.data[0]) {
           const result = res.data[0]
           this.form.name = result.name
           this.form.username = result.username

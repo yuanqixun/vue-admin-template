@@ -22,6 +22,16 @@
           </el-form-item>
         </el-col>
       </el-row>
+      <el-row v-if="type === 'add'">
+        <el-col :span="8">
+          <el-form-item label="初始密码：" prop="password"
+                        :rules="[
+                          { required: true, message: '请输入密码', trigger: 'blur' }
+                          ]">
+            <el-input type="password" v-model="form.password"/>
+          </el-form-item>
+        </el-col>
+      </el-row>
       <el-row>
         <el-col :span="24">
           <el-form-item label="是否启用：">
@@ -50,10 +60,12 @@
     name: 'system_config_UserDetail',
     data() {
       return {
+        type:'',
         form: {
           id: null,
           username: '',
           name: '',
+          password: '',
           isEnabled: true,
           authed_roles: []
         },
@@ -68,6 +80,7 @@
     methods: {
       initPage() {
         this.form.id = this.$route.query.id || ''
+        this.type = this.$route.query.type || ''
         this.getUserDetail()
       },
       closePage() {
@@ -75,7 +88,7 @@
       },
       getUserDetail() {
         getEditUserDetail({ id: this.form.id }).then(res => {
-          if (res.success) {
+          if (res.success && res.data[0]) {
             const result = res.data[0]
             this.form.name = result.name
             this.form.username = result.username

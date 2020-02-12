@@ -58,6 +58,28 @@
             ]
           },
           {
+            "uuid": "system.config.BaseDataList",
+            "name": "基础档案",
+            "pagePath": "/system/config/BaseDataList",
+            "subPages": [
+              {
+                "uuid": "system.config.BaseDataDetail",
+                "name": "基础档案详情",
+                "pagePath": "/system/config/BaseDataDetail"
+              }
+            ],
+            "permis": [
+              {
+                "uuid": "system.config.BaseDataList.add",
+                "name": "添加档案"
+              },
+              {
+                "uuid": "system.config.BaseDataList.remove",
+                "name": "删除档案"
+              }
+            ]
+          },
+          {
             "uuid": "system.config.MenuList",
             "name": "商户菜单",
             "pagePath": "/system/config/MenuList"
