@@ -152,6 +152,10 @@ export default {
               if(isNewAdd){
                 this.$router.push({path:this.$route.path,query:{id:this.form.id}})
               }
+              this.$message({
+                type: 'success',
+                message: res.errmsg || '操作成功!'
+              })
             }
           })
         } else {
