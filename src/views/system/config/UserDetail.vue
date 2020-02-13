@@ -73,6 +73,7 @@
       }
     },
     created() {
+      this.initPage()
     },
     activated() {
       this.initPage()
@@ -105,6 +106,12 @@
           if (valid) {
             saveUserDetail(this.form).then(res => {
               if (res.success) {
+                // 新增对象
+                const isNewAdd = !this.form.id
+                this.form.id = res.data[0].id
+                if(isNewAdd){
+                  this.$router.push({path:this.$route.path,query:{id:this.form.id}})
+                }
                 this.$message({
                   type: 'success',
                   message: res.errmsg || '操作成功!'

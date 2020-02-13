@@ -72,7 +72,7 @@ service.interceptors.response.use(
   error => {
     console.log('err' + error) // for debug
     Message({
-      message: error.message,
+      message: '会话已过期，请重新登录',
       type: 'error',
       duration: 5 * 1000
     })
